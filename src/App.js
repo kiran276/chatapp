@@ -1,25 +1,33 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+import socketIO from 'socket.io-client';
+import {BrowserRouter,Routes,Route} from 'react-router-dom'
+import Join from './component/Join/Join';
+import '../src/App.css'
+import Chats from './component/Chats/Chats';
+const ENDPOINT= 'https://demo-chat-app7387.herokuapp.com/';
+const socket=socketIO(ENDPOINT,{transports:['websocket']})
 
-function App() {
+const App = () => {
+socket.on("connect",()=>{
+  console.log("New connection");
+
+
+  
+})
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+    <BrowserRouter>
+      <Routes>
+        <Route exact path='/' element={<Join/>}/>
+        <Route exact path='/chats' element={<Chats/>}/>
+        
+
+       
+      </Routes>
+    </BrowserRouter>
+    
     </div>
-  );
+  )
 }
 
-export default App;
+export default App
